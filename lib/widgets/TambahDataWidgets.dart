@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'AppBarWidgets2.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:widget_text/widgets/BarBawah.dart'; 
+import 'package:supabase_flutter/supabase_flutter.dart';  
+
+final supabase = Supabase.instance.client;
+
 
 class Tambahdatawidgets extends StatelessWidget{
   @override
@@ -19,6 +25,8 @@ class ProductForm extends StatefulWidget {
 class _ProductFormState extends State<ProductForm> {
   String _katagori = 'Makanan';
   XFile? _imageFile;
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _priceController = TextEditingController();
 
   Future<void> _pickImage() async {
     final ImagePicker _picker = ImagePicker();
@@ -56,7 +64,8 @@ class _ProductFormState extends State<ProductForm> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     //Nama Produk
-                    TextFormField(
+                    TextField(
+                       controller: _nameController,
                       decoration: InputDecoration(
                         labelText: 'Nama Produk',
                         hintText: 'Masukan Nama Produk',
@@ -68,7 +77,8 @@ class _ProductFormState extends State<ProductForm> {
                     SizedBox(height: 30),
 
                     // Harga Field
-                  TextFormField(
+                  TextField(
+                    controller: _priceController,
                     decoration: InputDecoration(
                       labelText: 'Harga',
                       hintText: 'Masukan Harga',
@@ -126,7 +136,14 @@ class _ProductFormState extends State<ProductForm> {
 
                   //Button
                    ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
+                      final name = _nameController.text;
+                      final price = _priceController.text;
+
+                      await supabase.from('makan').insert({
+                            'name': name,
+                            'price': price,
+                          });
                       // Handle form submission
                     },
                     style: ElevatedButton.styleFrom(

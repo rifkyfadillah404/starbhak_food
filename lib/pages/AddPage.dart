@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-// import 'package:stharbak_mart/pages/CardPage.dart';
+import 'package:widget_text/pages/CardPage.dart';
 import 'package:widget_text/widgets/AppBarWidgets2.dart';
 import 'package:widget_text/widgets/TambahDataWidgets.dart';
 

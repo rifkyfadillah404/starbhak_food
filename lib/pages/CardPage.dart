@@ -1,10 +1,36 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:widget_text/widgets/AppBarWidgets2.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-class Cardpage extends StatelessWidget{
+
+final supabase = Supabase.instance.client;
+
+
+class Cardpage extends StatefulWidget {
+  const Cardpage({super.key});
+
+  @override
+  State<Cardpage> createState() => _CardpageState();
+}
+
+class _CardpageState extends State<Cardpage> {
+  Future<List<dynamic>> fetchData() async {
+    final response = await supabase.from('makan').select('*');
+    return response as List<dynamic>;
+  }
+
+  Future<void> deleteData(int id) async {
+    await supabase.from('makan').delete().eq('id', id);
+    setState(() {}); // Refresh the UI
+  }
+
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
+
     return Scaffold(
       body: ListView(
         children: [

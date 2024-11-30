@@ -2,8 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:widget_text/widgets/AllFood.dart';
 import 'package:widget_text/widgets/AppBarWidget.dart';
 import 'package:widget_text/widgets/CategoriesWidget.dart';
+import 'package:widget_text/widgets/PopularItemsWidget.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-class Homepage extends StatelessWidget {
+
+final supabase = Supabase.instance.client;
+
+class Homepage extends StatefulWidget {
+  @override
+  _HomepageState createState() => _HomepageState();
+}
+
+class _HomepageState extends State<Homepage> {
+  Future<List<dynamic>> fetchData() async {
+    final response = await supabase.from('makan').select('*');
+    return response as List<dynamic>;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
